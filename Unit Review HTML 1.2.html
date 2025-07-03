@@ -1,0 +1,1151 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Review Template</title>
+    <style>
+        :root {
+    --bg-color: #121212;
+    --container-bg: #1e1e1e;
+    --section-bg: #252525;
+    --text-color: #e0e0e0;
+    --border-color: #444;
+    --button-bg: #2e7d32;
+    --button-hover: #1b5e20;
+    --reset-button-bg: #d32f2f;
+    --reset-button-hover: #b71c1c;
+    --checkbox-bg: #333;
+    --input-bg: #333;
+    --input-text: #fff;
+    --tab-bg: #333;
+    --tab-active: #2e7d32;
+    --note-color: #aaa;
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--section-bg);
+        }
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+ button {
+    padding: 8px 15px;
+    margin-right: 10px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+button#resetBtn {
+    background-color: var(--reset-button-bg);
+}
+
+button#resetBtn:hover {
+    background-color: var(--reset-button-hover);
+}
+        .flags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.tab-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border-color);
+    justify-content: space-between; /* Add this */
+}
+
+.tab-button.denial-button {
+    background-color: var(--reset-button-bg);
+    margin-left: auto; /* Keep this to push it to the right */
+    order: 2; /* Add this to ensure it stays on the right */
+}
+
+/* Add this to keep regular tabs on the left */
+.tab-button:not(.denial-button) {
+    order: 1;
+}
+
+.tab-button.denial-button:hover {
+    background-color: var(--reset-button-hover);
+}
+
+.tab-button.denial-button.active {
+    background-color: var(--reset-button-hover);
+}
+
+.verify-button {
+    padding: 8px 15px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.verify-button:hover {
+    background-color: var(--button-hover);
+}
+
+.verify-button.verified {
+    background-color: var(--tab-active);
+}
+
+ .auto-approved-header {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin: 10px 0 5px 0;
+    }
+
+    .auto-approved-header::after {
+        content: "▶";
+        font-size: 12px;
+        margin-left: 5px;
+        transition: transform 0.3s;
+    }
+
+    .auto-approved-header.expanded::after {
+        content: "▼";
+    }
+
+    .auto-approved-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        margin-left: 20px;
+    }
+
+    .auto-approved-content.expanded {
+        max-height: 200px; /* Adjust as needed */
+    }
+
+        /* Style for Part 1 checkboxes */
+#EIN, #COI, #address, #selfie, #SSN {
+    background-color: #2fdcc3; /* Blue for these checkboxes */
+    border-color: #2fdcc3;
+}
+
+#OFAC, #PII {
+    background-color: #fe943d; /* Orange for these checkboxes */
+    border-color: #fe943d;
+}
+
+#Other {
+    background-color: #ed4649; /* Red for Other checkbox */
+    border-color: #ed4649;
+}
+
+/* Keep the checkmark white when checked */
+input[type="checkbox"]:checked::after {
+    color: white !important;
+}
+
+/* Keep the default checked state (green) for all other checkboxes */
+input[type="checkbox"]:checked {
+    background-color: var(--button-bg) !important;
+}
+.flag-item {
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+}
+        .tab-container {
+            margin-top: 15px;
+        }
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .tab-button {
+            padding: 8px 15px;
+            background-color: var(--tab-bg);
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+            color: var(--text-color);
+        }
+        .tab-button.active {
+            background-color: var(--tab-active);
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            background-color: var(--container-bg);
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .note {
+            font-style: italic;
+            color: var(--note-color);
+            margin-bottom: 10px;
+        }
+        .output-area {
+            width: 95%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            resize: vertical;
+            background-color: var(--input-bg);
+            color: var(--input-text);
+        }
+        .button-group {
+            margin-top: 15px;
+        }
+        button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: var(--button-hover);
+        }
+        .checkbox-item {
+            margin-bottom: 8px;
+        }
+        .ofac-input-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .ofac-input-group input[type="text"] {
+            padding: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            background-color: var(--input-bg);
+            color: var(--input-text);
+        }
+        .hidden {
+            display: none;
+        }
+.part-0-toggle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.part-0-toggle::after {
+    content: "▼";
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.part-0-toggle.collapsed::after {
+    transform: rotate(-90deg);
+}
+
+.parts-1-2 {
+    transition: opacity 0.3s, max-height 0.3s;
+    max-height: calc(100vh - 200px);
+}
+
+.parts-1-2.hidden {
+    opacity: 0;
+    max-height: 0;
+}
+
+.parts-1-2.visible {
+    opacity: 1;
+    max-height: 1000px; /* Adjust as needed */
+}
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            margin-right: 8px;
+            background-color: var(--checkbox-bg);
+            position: relative;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: var(--button-bg);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+.other-item {
+    align-self: flex-start;
+}
+        .checkbox-item input[type="checkbox"] {
+            vertical-align: middle;
+            position: relative;
+            bottom: 1px;
+        }
+        .checkbox-item label {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Unit Review Template</h1>
+<div class="note" style="margin-top: -10px; margin-bottom: 15px;">
+    More details <a href="https://docs.google.com/document/d/1b5ktwFlRRJx7DLqqk7BnBiW0P5w-ovHJb7cxL7mX2vI/edit?tab=t.0" target="_blank" style="color: var(--button-bg); text-decoration: underline;">here</a>.
+</div>
+
+    <!-- Part 0: Address Search -->
+    <div class="section">
+    <div class="section-title part-0-toggle">Part 0: Address Search</div>
+    <div class="flag-item">
+        <button id="addressVerifyBtn" class="verify-button">Verify Business & Personal Address</button>
+    </div>
+</div>
+
+    <!-- Parts 1 and 2 Container -->
+    <div class="parts-1-2 hidden" id="parts1and2">
+        <!-- Part 1: Evaluation Flags -->
+        <div class="section">
+            <div class="section-title">Part 1: Evaluation Flags</div>
+            <div class="flags-container">
+    <!-- Left Column -->
+    <div class="flag-column">
+        <div class="flag-item">
+            <input type="checkbox" id="COI" class="flag-checkbox">
+            <label for="COI">COI Document Required</label>
+        </div>
+        <div class="flag-item">
+            <input type="checkbox" id="OFAC" class="flag-checkbox">
+            <label for="OFAC">OFAC Flag</label>
+        </div>
+        <div class="flag-item">
+            <input type="checkbox" id="EIN" class="flag-checkbox">
+            <label for="EIN">FEIN Document Required</label>
+        </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="flag-column">
+        <div class="flag-item">
+            <input type="checkbox" id="address" class="flag-checkbox">
+            <label for="address">Address Verification Required</label>
+        </div>
+        <div class="flag-item">
+            <input type="checkbox" id="selfie" class="flag-checkbox">
+            <label for="selfie">Selfie/ID Verification Required</label>
+        </div>
+        <div class="flag-item">
+            <input type="checkbox" id="PII" class="flag-checkbox">
+            <label for="PII">PII Previously Seen</label>
+        </div>
+        <div class="flag-item">
+            <input type="checkbox" id="SSN" class="flag-checkbox">
+            <label for="SSN">SSN Verification Required</label>
+        </div>
+    </div>
+
+    <!-- Standalone Other checkbox -->
+    <div class="flag-item other-item">
+        <input type="checkbox" id="Other" class="flag-checkbox">
+        <label for="Other">Other</label>
+    </div>
+    </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Part 2: Verification</div>
+            <div class="tab-container">
+                <div class="tab-buttons" id="tabButtons">
+                    <button class="tab-button" data-tab="empty">No sections selected</button>
+                    <button class="tab-button denial-button" data-tab="denial">Denial</button>
+                </div>
+                <div class="tab-content active" id="empty">
+                    Please select flags from Part 1 to see available sections.
+                </div>
+
+                <!-- Selfie Section -->
+<div class="tab-content hidden" id="selfie-section">
+    <div class="note">
+        <strong>Check:</strong><br>
+        - Name and DOB match, passport # match<br>
+        - ID expiry date<br>
+        - Age and location (cannot be under 18 or from a prohibited country)<br>
+        - Quality of ID (cannot be voided or forged)<br>
+        - First/last name <strong>cannot</strong> be shortened, must be exact match
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="selfie_matches">
+        <label for="selfie_matches">selfie matches the ID</label>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="passport_verifies">
+        <label for="passport_verifies">passport verifies the name, DOB and passport number</label>
+    </div>
+    <div class="auto-approved-header">
+        <strong>Auto-approved:</strong>
+    </div>
+    <div class="auto-approved-content">
+        <div class="checkbox-item">
+            <input type="checkbox" id="personal_name_miskeyed">
+            <label for="personal_name_miskeyed">first name/last name miskeyed. Updated and reran and auto-approved</label>
+        </div>
+        <div class="checkbox-item">
+            <input type="checkbox" id="DOB_miskeyed">
+            <label for="DOB_miskeyed">DOB miskeyed. Updated and reran and auto-approved</label>
+        </div>
+    </div>
+</div>
+
+<!-- Address Section -->
+<div class="tab-content hidden" id="address-section">
+    <div class="note">
+        <strong>Check:</strong><br>
+        - Name and address match<br>
+        - Document Date (must be within 6 months)<br>
+        - Leases are signed/contain signatures
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="address_verified">
+        <label for="address_verified"></label>
+        <select id="address_document_type" style="margin-left: 5px; background-color: var(--input-bg); color: var(--input-text); border: 1px solid var(--border-color); border-radius: 3px; padding: 3px;">
+            <option value="utility bill">utility bill</option>
+            <option value="bank/credit card statement">bank/credit card statement</option>
+            <option value="lease agreement">lease agreement</option>
+            <option value="pay stub">pay stub</option>
+            <option value="insurance bill">insurance bill</option>
+            <option value="US driver's license">US driver's license</option>
+        </select>
+        <span>verifies address</span>
+    </div>
+    <div class="auto-approved-header">
+        <strong>Auto-approved:</strong>
+    </div>
+    <div class="auto-approved-content">
+        <div class="checkbox-item">
+            <input type="checkbox" id="address_miskeyed">
+            <label for="address_miskeyed">address miskeyed. Updated and reran and auto-approved</label>
+        </div>
+    </div>
+</div>
+
+<!-- EIN Section -->
+<div class="tab-content hidden" id="ein-section">
+    <div class="note">
+        <strong>Check:</strong><br>
+        - EIN, business name, and customer name match
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="irs_letter">
+        <label for="irs_letter">IRS letter verifies EIN</label>
+    </div>
+        <div class="checkbox-item">
+        <input type="checkbox" id="tax_return">
+        <label for="tax_return">tax return verifies EIN</label>
+    </div>
+    <div class="auto-approved-header">
+        <strong>Auto-approved:</strong>
+    </div>
+    <div class="auto-approved-content">
+        <div class="checkbox-item">
+            <input type="checkbox" id="ein_miskeyed">
+            <label for="ein_miskeyed">EIN miskeyed. Updated and reran and auto-approved</label>
+        </div>
+        <div class="checkbox-item">
+            <input type="checkbox" id="ein_business_name_miskeyed">
+            <label for="ein_business_name_miskeyed">business name miskeyed. Updated and reran and auto-approved</label>
+        </div>
+    </div>
+</div>
+
+<!-- SSN Section -->
+<div class="tab-content hidden" id="ssn-section">
+    <div class="note">
+        <strong>Check:</strong><br>
+        - Name and SSN match<br>
+        - Document must be one of the accepted types
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="ssn_verified">
+        <label for="ssn_verified"></label>
+        <select id="ssn_document_type" style="margin-left: 5px; background-color: var(--input-bg); color: var(--input-text); border: 1px solid var(--border-color); border-radius: 3px; padding: 3px;">
+            <option value="SSN card">SSN card</option>
+            <option value="tax return">tax return</option>
+            <option value="W-2">W-2</option>
+        </select>
+        <span>verifies SSN</span>
+    </div>
+    <div class="auto-approved-header">
+        <strong>Auto-approved:</strong>
+    </div>
+    <div class="auto-approved-content">
+        <div class="checkbox-item">
+            <input type="checkbox" id="ssn_miskeyed">
+            <label for="ssn_miskeyed">SSN miskeyed. Updated and reran and auto-approved</label>
+        </div>
+    </div>
+</div>
+                <!-- COI Section -->
+<div class="tab-content hidden" id="coi-section">
+    <div class="note">
+        <strong>Check:</strong><br>
+        - Valid COI <a href="https://docs.google.com/document/d/1b5ktwFlRRJx7DLqqk7BnBiW0P5w-ovHJb7cxL7mX2vI/edit?tab=t.97f76w8a2euc" target="_blank" style="color: var(--button-bg); text-decoration: underline;">documentation type</a><br>
+        - Business name/registered state match
+    </div>
+        <div class="note">
+    State Registration Does Not Match:
+</div>
+<div class="checkbox-item">
+    <input type="checkbox" id="state_registration">
+    <label for="state_registration">COI verifies the state registration</label>
+</div>
+    <div class="note">
+        Name Not Verified:
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="business_name">
+        <label for="business_name">COI verifies the business name</label>
+    </div>
+
+    <div class="auto-approved-header">
+        <strong>Auto-approved:</strong>
+    </div>
+    <div class="auto-approved-content">
+        <div class="checkbox-item">
+            <input type="checkbox" id="state_registration_miskeyed">
+            <label for="state_registration_miskeyed">state registration miskeyed. Updated and reran and auto-approved</label>
+        </div>
+        <div class="checkbox-item">
+            <input type="checkbox" id="coi_business_name_miskeyed">
+            <label for="coi_business_name_miskeyed">business name miskeyed. Updated and reran and auto-approved</label>
+        </div>
+    </div>
+</div>
+
+                <!-- PII Section -->
+<div class="tab-content hidden" id="pii-section">
+    <div class="note">
+        <strong>Check:</strong><br>
+        - Search by customer name/email<br>
+        - Related applicants ID/DOB match<br>
+        - Status of application (approved, denied, etc.)
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="pii_related_account">
+        <label for="pii_related_account">PII flag for related account</label>
+        <select id="pii_account_status" style="margin-left: 5px; background-color: var(--input-bg); color: var(--input-text); border: 1px solid var(--border-color); border-radius: 3px; padding: 3px;">
+            <option value="good standing">good standing</option>
+            <option value="awaiting docs">awaiting docs</option>
+            <option value="pending review">pending review</option>
+            <option value="cancelled">cancelled</option>
+        </select>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="not_with_relay">
+        <label for="not_with_relay">PII flag for related account not with Relay</label>
+    </div>
+</div>
+
+                <!-- OFAC Section -->
+                <div class="tab-content hidden" id="ofac-section">
+                    <!-- NMM -->
+                    <div class="note">NMM: BO-BO (applicant) or biz-biz (customer)</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nmm_applicant">
+                        <label for="nmm_applicant">NMM applicant</label>
+                        <div class="ofac-input-group">
+                            <input type="text" id="nmm_applicant_text1" placeholder="name">
+                            <span>is not SDN</span>
+                            <input type="text" id="nmm_applicant_text2" placeholder="name">
+                        </div>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nmm_customer">
+                        <label for="nmm_customer">NMM customer</label>
+                        <div class="ofac-input-group">
+                            <input type="text" id="nmm_customer_text1" placeholder="name">
+                            <span>is not SDN</span>
+                            <input type="text" id="nmm_customer_text2" placeholder="name">
+                        </div>
+                    </div>
+
+                    <!-- NAE -->
+                    <div class="note">NAE: BO-biz (applicant)</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nae_applicant">
+                        <label for="nae_applicant">NAE Applicant</label>
+                        <div class="ofac-input-group">
+                            <input type="text" id="nae_applicant_text1" placeholder="name">
+                            <span>is not the SDN</span>
+                            <input type="text" id="nae_applicant_text2" placeholder="name">
+                        </div>
+                    </div>
+
+                    <!-- NAI -->
+                    <div class="note">NAI: biz-BO (customer)</div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nai_customer">
+                        <label for="nai_customer">NAI customer</label>
+                        <div class="ofac-input-group">
+                            <input type="text" id="nai_customer_text1" placeholder="name">
+                            <span>an entity is not SDN</span>
+                            <input type="text" id="nai_customer_text2" placeholder="name">
+                            <span>a person</span>
+                        </div>
+
+                        <!-- Too many sanctions -->
+                        <div class="note">Too many sanctions to list:<br>
+                        ex. NMM for 28 potential hits which are all false positives
+                        </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="potential_hits">
+                        <div class="ofac-input-group">
+                            <input type="text" id="potential_hits_text1" placeholder="type">
+                            <span>for</span>
+                            <input type="text" id="potential_hits_text2" placeholder="number">
+                            <span>potential hits which are all false positives</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Denial Section -->
+<div class="tab-content hidden" id="denial-section">
+    <div class="note">
+        <strong>Rejection Reasons:</strong><br>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="fraud_risk">
+        <label for="fraud_risk">fraud risk</label>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="prohibited_country">
+        <label for="prohibited_country">address/passport from prohibited country</label>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="pii_denied">
+        <label for="pii_denied">PII Flag for related duplicate or denied account</label>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="document_forgery">
+        <label for="document_forgery">suspected document/ID forgery</label>
+    </div>
+        <div class="checkbox-item">
+        <input type="checkbox" id="socure_error">
+        <label for="socure_error">socure error, user must reapply</label>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="pep_positive_match">
+        <label for="pep_positive_match">domestic/international PEP is a positive match. BSA will be notified for risk rating purposes
+</label>
+    </div>
+</div>
+                <!-- Other Section -->
+                <div class="tab-content hidden" id="other-section">
+                    <div class="checkbox-item">
+        <input type="checkbox" id="pep_false_positive">
+        <label for="pep_false_positive">domestic/international PEP is false positive, no DOB/name match</label>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="adverse_media">
+        <label for="adverse_media">adverse media is false positive, no DOB/exact name match</label>
+    </div>
+</div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-title">Part 3: Generated Output</div>
+            <textarea class="output-area" id="outputText"></textarea>
+            <div class="button-group">
+                <button id="generateBtn">Generate Output</button>
+                <button id="copyBtn">Copy to Clipboard</button>
+                <button id="resetBtn">Reset</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const tabOrder = ['PII', 'COI', 'EIN', 'SSN', 'address', 'selfie', 'OFAC', 'Other'];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize tab contents
+        const tabContents = {
+            'empty': document.getElementById('empty'),
+            'denial': document.getElementById('denial-section'),
+            'selfie': document.getElementById('selfie-section'),
+            'address': document.getElementById('address-section'),
+            'EIN': document.getElementById('ein-section'),
+            'SSN': document.getElementById('ssn-section'),
+            'COI': document.getElementById('coi-section'),
+            'PII': document.getElementById('pii-section'),
+            'OFAC': document.getElementById('ofac-section'),
+            'Other': document.getElementById('other-section')
+        };
+
+        // Auto-approved section toggle functionality
+        document.querySelectorAll('.auto-approved-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+                const content = this.nextElementSibling;
+                content.classList.toggle('expanded');
+            });
+        });
+
+        // Function to update tabs based on selected flags
+function updateTabs() {
+    const tabButtons = document.getElementById('tabButtons');
+    tabButtons.innerHTML = ''; // Clear existing buttons
+
+    // Check which flags are checked
+    let hasFlags = false;
+    tabOrder.forEach(tabId => {
+        const checkbox = document.getElementById(tabId);
+        if (checkbox && checkbox.checked) {
+            hasFlags = true;
+        } else {
+            // Clear content for unchecked flags
+            const tabContent = document.getElementById(`${tabId.toLowerCase()}-section`);
+            if (tabContent) {
+                // Uncheck all checkboxes in this section
+                tabContent.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.checked = false;
+                });
+                // Clear all text inputs in this section
+                tabContent.querySelectorAll('input[type="text"]').forEach(input => {
+                    input.value = '';
+                });
+                // Reset dropdowns if any
+                if (tabId === 'address') {
+                    document.getElementById('address_document_type').value = 'utility bill';
+                }
+                if (tabId === 'PII') {
+                    document.getElementById('pii_account_status').value = 'good standing';
+                }
+                // Hide the tab content
+                tabContent.classList.remove('active');
+            }
+        }
+    });
+
+    // Check if we're on the Denial tab
+    const isDenialActive = document.querySelector('.tab-button.active')?.dataset.tab === 'denial';
+
+    // Add default empty tab (but only if no flags are selected and we're not on the Denial tab)
+    if (!hasFlags && !isDenialActive) {
+        const emptyButton = document.createElement('button');
+        emptyButton.className = 'tab-button active';
+        emptyButton.dataset.tab = 'empty';
+        emptyButton.textContent = 'No sections selected';
+        tabButtons.appendChild(emptyButton);
+        tabContents['empty'].classList.add('active');
+    } else {
+        tabContents['empty'].classList.remove('active');
+    }
+
+    // Add tabs for selected flags (unless we're on the Denial tab)
+    if (!isDenialActive) {
+        tabOrder.forEach(tabId => {
+            const checkbox = document.getElementById(tabId);
+            if (checkbox && checkbox.checked) {
+                const tabButton = document.createElement('button');
+                tabButton.className = 'tab-button';
+                tabButton.dataset.tab = tabId;
+                tabButton.textContent = tabId === 'EIN' ? 'FEIN' : tabId;
+                tabButtons.appendChild(tabButton);
+            }
+        });
+    }
+
+    // Always add denial button
+    const denialButton = document.createElement('button');
+    denialButton.className = 'tab-button denial-button';
+    denialButton.dataset.tab = 'denial';
+    denialButton.textContent = 'Denial';
+
+    // If Denial is active, make it the only active tab
+    if (isDenialActive) {
+        denialButton.classList.add('active');
+        tabContents['denial'].classList.add('active');
+    }
+
+    tabButtons.appendChild(denialButton);
+
+    // Set up tab button click handlers
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const tabId = this.dataset.tab;
+
+            // Special handling for denial tab
+            if (tabId === 'denial') {
+                // Clear all Part 1 checkboxes
+                document.querySelectorAll('.flag-checkbox').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                // Clear all verification sections
+                softReset();
+                // Force update of tabs to reflect the unchecked checkboxes
+                updateTabs();
+                // Hide the empty tab message
+    tabContents['empty'].classList.remove('active');
+                // Ensure only Denial tab is shown
+                tabContents['denial'].classList.add('active');
+                return; // Skip the rest of the click handler
+            }
+
+            // Normal tab handling
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            // Hide all tab contents
+            Object.values(tabContents).forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show the selected tab content
+            if (tabContents[tabId]) {
+                tabContents[tabId].classList.add('active');
+            }
+
+            // Clear the denial checkboxes when switching to any other tab
+            document.querySelectorAll('#denial-section input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        });
+    });
+
+    // If we have flags but no active tab (and not on Denial), activate the first one
+    if (hasFlags && !document.querySelector('.tab-button.active') && !isDenialActive) {
+        const firstTabButton = document.querySelector('.tab-button:not(.denial-button)');
+        if (firstTabButton) {
+            firstTabButton.click();
+        }
+    }
+}
+        // Soft reset function
+        function softReset() {
+            // Uncheck all verification checkboxes in all sections (except Part 0)
+            document.querySelectorAll('.tab-content input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Clear all text inputs in verification sections
+            document.querySelectorAll('.tab-content input[type="text"]').forEach(input => {
+                input.value = '';
+            });
+
+            // Reset dropdowns
+            document.getElementById('pii_account_status').value = 'good standing';
+            document.getElementById('address_document_type').value = 'utility bill';
+            document.getElementById('ssn_document_type').value = 'SSN card';
+
+            // Reset auto-approved sections
+document.querySelectorAll('.auto-approved-header').forEach(header => {
+    header.classList.remove('expanded');
+    const content = header.nextElementSibling;
+    content.classList.remove('expanded');
+});
+
+            // Clear the output
+            document.getElementById('outputText').value = '';
+        }
+
+        // Part 0 toggle functionality
+        const addressVerifyBtn = document.getElementById('addressVerifyBtn');
+        const parts1and2 = document.getElementById('parts1and2');
+        const part0Toggle = document.querySelector('.part-0-toggle');
+
+        addressVerifyBtn.addEventListener('click', function() {
+            this.classList.toggle('verified');
+            const isVerified = this.classList.contains('verified');
+
+            if (isVerified) {
+                parts1and2.classList.remove('hidden');
+                parts1and2.classList.add('visible');
+                part0Toggle.classList.add('collapsed');
+                this.textContent = "✓ Verified Business & Personal Address";
+            } else {
+                parts1and2.classList.add('hidden');
+                parts1and2.classList.remove('visible');
+                part0Toggle.classList.remove('collapsed');
+                this.textContent = "Verify Business & Personal Address";
+            }
+        });
+
+        // Make the Part 0 title clickable to toggle
+        part0Toggle.addEventListener('click', function() {
+            if (!addressVerifyBtn.classList.contains('verified')) {
+                addressVerifyBtn.click();
+            }
+        });
+
+        // Set up flag checkbox change handlers
+        document.querySelectorAll('.flag-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', updateTabs);
+        });
+
+        // Generate output button
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const outputLines = [];
+
+            // PII
+            if (document.getElementById('PII').checked) {
+                if (document.getElementById('pii_related_account').checked) {
+                    const status = document.getElementById('pii_account_status').value;
+                    outputLines.push(`PII flag for related account ${status}`);
+                }
+                if (document.getElementById('not_with_relay').checked) {
+                    outputLines.push('PII flag for related account not with Relay');
+                }
+            }
+
+                        // COI
+            if (document.getElementById('COI').checked) {
+                if (document.getElementById('business_name').checked) {
+                    outputLines.push('COI verifies the business name');
+                }
+                if (document.getElementById('state_registration').checked) {
+                    outputLines.push('COI verifies the state registration');
+                }
+                if (document.getElementById('state_registration_miskeyed').checked) {
+                    outputLines.push('state registration miskeyed. Updated and reran and auto-approved');
+                }
+                if (document.getElementById('coi_business_name_miskeyed').checked) {
+                    outputLines.push('business name miskeyed. Updated and reran and auto-approved');
+                }
+            }
+
+             // EIN
+            if (document.getElementById('EIN').checked) {
+                if (document.getElementById('irs_letter').checked) {
+                    outputLines.push('IRS letter verifies EIN');
+                }
+                if (document.getElementById('tax_return').checked) {
+                    outputLines.push('tax return verifies EIN');
+                }
+                if (document.getElementById('ein_miskeyed').checked) {
+                    outputLines.push('EIN miskeyed. Updated and reran and auto-approved');
+                }
+                if (document.getElementById('ein_business_name_miskeyed').checked) {
+                    outputLines.push('business name miskeyed. Updated and reran and auto-approved');
+                }
+            }
+
+            // SSN
+if (document.getElementById('SSN').checked) {
+    if (document.getElementById('ssn_verified').checked) {
+        const docType = document.getElementById('ssn_document_type').value;
+        outputLines.push(`${docType} verifies SSN`);
+    }
+    if (document.getElementById('ssn_miskeyed').checked) {
+        outputLines.push('SSN miskeyed. Updated and reran and auto-approved');
+    }
+}
+
+             // Address
+            if (document.getElementById('address').checked) {
+                if (document.getElementById('address_verified').checked) {
+                    const docType = document.getElementById('address_document_type').value;
+                    outputLines.push(`${docType} verifies address`);
+                }
+                if (document.getElementById('address_miskeyed').checked) {
+                    outputLines.push('address miskeyed. Updated and reran and auto-approved');
+                }
+            }
+
+            // Selfie
+            if (document.getElementById('selfie').checked) {
+                if (document.getElementById('selfie_matches').checked) {
+                    outputLines.push('selfie matches the ID');
+                }
+                if (document.getElementById('passport_verifies').checked) {
+                    outputLines.push('Passport verifies the name, DOB and passport number');
+                }
+                if (document.getElementById('personal_name_miskeyed').checked) {
+                    outputLines.push('first name/last name miskeyed. Updated and reran and auto-approved');
+                }
+                if (document.getElementById('DOB_miskeyed').checked) {
+                    outputLines.push('DOB miskeyed. Updated and reran and auto-approved');
+                }
+            }
+
+
+            // OFAC
+            if (document.getElementById('OFAC').checked) {
+                if (document.getElementById('nmm_applicant').checked) {
+                    const text1 = document.getElementById('nmm_applicant_text1').value || 'name';
+                    const text2 = document.getElementById('nmm_applicant_text2').value || 'name';
+                    outputLines.push(`NMM applicant ${text1} is not SDN ${text2}`);
+                }
+                if (document.getElementById('nmm_customer').checked) {
+                    const text1 = document.getElementById('nmm_customer_text1').value || 'name';
+                    const text2 = document.getElementById('nmm_customer_text2').value || 'name';
+                    outputLines.push(`NMM customer ${text1} is not SDN ${text2}`);
+                }
+                if (document.getElementById('nae_applicant').checked) {
+                    const text1 = document.getElementById('nae_applicant_text1').value || 'name';
+                    const text2 = document.getElementById('nae_applicant_text2').value || 'name';
+                    outputLines.push(`NAE Applicant ${text1} is not the SDN ${text2}`);
+                }
+                if (document.getElementById('nai_customer').checked) {
+                    const text1 = document.getElementById('nai_customer_text1').value || 'name';
+                    const text2 = document.getElementById('nai_customer_text2').value || 'name';
+                    outputLines.push(`NAI customer ${text1} an entity is not SDN ${text2} a person`);
+                }
+                if (document.getElementById('potential_hits').checked) {
+                    const text1 = document.getElementById('potential_hits_text1').value || 'type';
+                    const text2 = document.getElementById('potential_hits_text2').value || 'number';
+                    outputLines.push(`${text1} for ${text2} potential hits which are all false positives`);
+                }
+            }
+
+            // Other Section
+            if (document.getElementById('Other').checked) {
+                if (document.getElementById('pep_false_positive').checked) {
+                    outputLines.push('domestic/international PEP is false positive, no DOB/name match');
+                }
+                if (document.getElementById('adverse_media').checked) {
+                    outputLines.push('adverse media is false positive, no DOB/exact name match');
+                }
+            }
+
+            // Denial - Always check denial checkboxes regardless of which tab is active
+if (document.getElementById('fraud_risk').checked) {
+    outputLines.push('fraud risk');
+}
+if (document.getElementById('prohibited_country').checked) {
+    outputLines.push('address/passport from prohibited country');
+}
+if (document.getElementById('pii_denied').checked) {
+    outputLines.push('PII Flag for related duplicate or denied account');
+}
+if (document.getElementById('document_forgery').checked) {
+    outputLines.push('suspected document/ID forgery');
+}
+if (document.getElementById('socure_error').checked) {
+    outputLines.push('socure error, user must reapply');
+}
+if (document.getElementById('pep_positive_match').checked) {
+    outputLines.push('domestic/international PEP is a positive match. BSA will be notified for risk rating purposes');
+}
+
+            // Update output textarea
+            document.getElementById('outputText').value = outputLines.join(', ');
+        });
+
+        // Copy to clipboard
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const outputText = document.getElementById('outputText');
+            outputText.select();
+            document.execCommand('copy');
+
+            // Show a brief notification
+            const originalText = this.textContent;
+            this.textContent = 'Copied!';
+            setTimeout(() => {
+                this.textContent = originalText;
+            }, 2000);
+        });
+
+        // Reset form
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            // Uncheck all checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Reset dropdowns
+            document.getElementById('pii_account_status').value = 'good standing';
+            document.getElementById('address_document_type').value = 'utility bill';
+            document.getElementById('ssn_document_type').value = 'SSN card';
+
+            // Clear all text inputs
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                input.value = '';
+            });
+
+            // Clear output
+            document.getElementById('outputText').value = '';
+
+            // Reset Part 0 to initial state
+            parts1and2.classList.add('hidden');
+            parts1and2.classList.remove('visible');
+            part0Toggle.classList.remove('collapsed');
+
+            // Reset the address verification button
+            addressVerifyBtn.classList.remove('verified');
+            addressVerifyBtn.textContent = "Verify Business & Personal Address";
+
+            // Reset auto-approved sections
+document.querySelectorAll('.auto-approved-header').forEach(header => {
+    header.classList.remove('expanded');
+    const content = header.nextElementSibling;
+    content.classList.remove('expanded');
+});
+
+ // Reset tabs - this is the key change
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    tabContents['empty'].classList.add('active');
+
+            // Reset tabs
+            updateTabs();
+        });
+
+        // Initialize tabs
+        updateTabs();
+    });
+</script>
+</body>
+</html>
