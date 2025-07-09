@@ -483,14 +483,15 @@ input[type="checkbox"]:checked {
         <strong>Check:</strong><br>
         - EIN, business name, and customer name match
     </div>
-    <div class="checkbox-item">
-        <input type="checkbox" id="irs_letter">
-        <label for="irs_letter">IRS letter verifies EIN</label>
-    </div>
-        <div class="checkbox-item">
-        <input type="checkbox" id="tax_return">
-        <label for="tax_return">tax return verifies EIN</label>
-    </div>
+   <div class="checkbox-item">
+    <input type="checkbox" id="ein_verified">
+    <label for="ein_verified"></label>
+    <select id="ein_document_type" style="margin-left: 5px; background-color: var(--input-bg); color: var(--input-text); border: 1px solid var(--border-color); border-radius: 3px; padding: 3px;">
+        <option value="IRS letter">IRS letter</option>
+        <option value="tax return">tax return</option>
+    </select>
+    <span>verifies EIN</span>
+</div>
     <div class="auto-approved-header">
         <strong>Auto-approved:</strong>
     </div>
@@ -762,11 +763,18 @@ function updateTabs() {
                     input.value = '';
                 });
                 // Reset dropdowns if any
+                if (tabId === 'PII') {
+                    document.getElementById('pii_account_status').value = 'good standing';
+                }
+                if (tabId === 'address') {
+                    document.getElementById('ein_document_type').value = 'IRS letter';
+                }
                 if (tabId === 'address') {
                     document.getElementById('address_document_type').value = 'utility bill';
                 }
-                if (tabId === 'PII') {
-                    document.getElementById('pii_account_status').value = 'good standing';
+
+                if (tabId === 'SSN') {
+                    document.getElementById('ssn_document_type').value = 'SSN card';
                 }
                 // Hide the tab content
                 tabContent.classList.remove('active');
@@ -887,8 +895,10 @@ function updateTabs() {
 
             // Reset dropdowns
             document.getElementById('pii_account_status').value = 'good standing';
+            document.getElementById('ein_document_type').value = 'IRS letter';
             document.getElementById('address_document_type').value = 'utility bill';
             document.getElementById('ssn_document_type').value = 'SSN card';
+
 
             // Reset auto-approved sections
 document.querySelectorAll('.auto-approved-header').forEach(header => {
@@ -966,21 +976,19 @@ document.querySelectorAll('.auto-approved-header').forEach(header => {
                 }
             }
 
-             // EIN
-            if (document.getElementById('EIN').checked) {
-                if (document.getElementById('irs_letter').checked) {
-                    outputLines.push('IRS letter verifies EIN');
-                }
-                if (document.getElementById('tax_return').checked) {
-                    outputLines.push('tax return verifies EIN');
-                }
-                if (document.getElementById('ein_miskeyed').checked) {
-                    outputLines.push('EIN miskeyed. Updated and reran and auto-approved');
-                }
-                if (document.getElementById('ein_business_name_miskeyed').checked) {
-                    outputLines.push('business name miskeyed. Updated and reran and auto-approved');
-                }
-            }
+// EIN
+if (document.getElementById('EIN').checked) {
+    if (document.getElementById('ein_verified').checked) {
+        const docType = document.getElementById('ein_document_type').value;
+        outputLines.push(`${docType} verifies EIN`);
+    }
+    if (document.getElementById('ein_miskeyed').checked) {
+        outputLines.push('EIN miskeyed. Updated and reran and auto-approved');
+    }
+    if (document.getElementById('ein_business_name_miskeyed').checked) {
+        outputLines.push('business name miskeyed. Updated and reran and auto-approved');
+    }
+}
 
             // SSN
 if (document.getElementById('SSN').checked) {
