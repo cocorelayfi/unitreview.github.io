@@ -430,6 +430,10 @@ input[type="checkbox"]:checked {
         <input type="checkbox" id="passport_verifies">
         <label for="passport_verifies">passport verifies the name, DOB and passport number</label>
     </div>
+        <div class="checkbox-item">
+        <input type="checkbox" id="dl_verifies">
+        <label for="dl_verifies">driver’s license verifies the name and DOB</label>
+    </div>
     <div class="auto-approved-header">
         <strong>Auto-approved:</strong>
     </div>
@@ -561,12 +565,16 @@ input[type="checkbox"]:checked {
     </div>
     <div class="auto-approved-content">
         <div class="checkbox-item">
-            <input type="checkbox" id="state_registration_miskeyed">
-            <label for="state_registration_miskeyed">state registration miskeyed. Updated and reran and auto-approved</label>
+            <input type="checkbox" id="coi_address_miskeyed">
+            <label for="coi_address_miskeyed">address miskeyed. Updated and reran and auto-approved</label>
         </div>
         <div class="checkbox-item">
             <input type="checkbox" id="coi_business_name_miskeyed">
             <label for="coi_business_name_miskeyed">business name miskeyed. Updated and reran and auto-approved</label>
+        </div>
+        <div class="checkbox-item">
+            <input type="checkbox" id="state_registration_miskeyed">
+            <label for="state_registration_miskeyed">state registration miskeyed. Updated and reran and auto-approved</label>
         </div>
     </div>
 </div>
@@ -678,6 +686,10 @@ input[type="checkbox"]:checked {
     <div class="checkbox-item">
         <input type="checkbox" id="document_forgery">
         <label for="document_forgery">suspected document/ID forgery</label>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="multiple_documents">
+        <label for="multiple_documents">multiple failed requests for documents</label>
     </div>
         <div class="checkbox-item">
         <input type="checkbox" id="socure_error">
@@ -969,11 +981,14 @@ document.querySelectorAll('.auto-approved-header').forEach(header => {
                 if (document.getElementById('state_registration').checked) {
                     outputLines.push('COI verifies the state registration');
                 }
-                if (document.getElementById('state_registration_miskeyed').checked) {
-                    outputLines.push('state registration miskeyed. Updated and reran and auto-approved');
+                if (document.getElementById('coi_address_miskeyed').checked) {
+                    outputLines.push('address miskeyed. Updated and reran and auto-approved');
                 }
                 if (document.getElementById('coi_business_name_miskeyed').checked) {
                     outputLines.push('business name miskeyed. Updated and reran and auto-approved');
+                }
+                if (document.getElementById('state_registration_miskeyed').checked) {
+                    outputLines.push('state registration miskeyed. Updated and reran and auto-approved');
                 }
             }
 
@@ -1019,7 +1034,10 @@ if (document.getElementById('SSN').checked) {
                     outputLines.push('selfie matches the ID');
                 }
                 if (document.getElementById('passport_verifies').checked) {
-                    outputLines.push('Passport verifies the name, DOB and passport number');
+                    outputLines.push('passport verifies the name, DOB and passport number');
+                }
+                if (document.getElementById('dl_verifies').checked) {
+                    outputLines.push('driver’s license verifies the name and DOB');
                 }
                 if (document.getElementById('personal_name_miskeyed').checked) {
                     outputLines.push('first name/last name miskeyed. Updated and reran and auto-approved');
@@ -1081,6 +1099,9 @@ if (document.getElementById('pii_denied').checked) {
 }
 if (document.getElementById('document_forgery').checked) {
     outputLines.push('suspected document/ID forgery');
+}
+if (document.getElementById('multiple_documents').checked) {
+    outputLines.push('multiple failed requests for documents');
 }
 if (document.getElementById('socure_error').checked) {
     outputLines.push('socure error, user must reapply');
