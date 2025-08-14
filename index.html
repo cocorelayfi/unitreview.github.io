@@ -691,10 +691,6 @@ input[type="checkbox"]:checked {
         <input type="checkbox" id="multiple_documents">
         <label for="multiple_documents">multiple failed requests for documents</label>
     </div>
-        <div class="checkbox-item">
-        <input type="checkbox" id="socure_error">
-        <label for="socure_error">socure error, user must reapply</label>
-    </div>
     <div class="checkbox-item">
         <input type="checkbox" id="pep_positive_match">
         <label for="pep_positive_match">domestic/international PEP is a positive match. BSA will be notified for risk rating purposes
@@ -710,6 +706,10 @@ input[type="checkbox"]:checked {
     <div class="checkbox-item">
         <input type="checkbox" id="adverse_media">
         <label for="adverse_media">adverse media is false positive, no DOB/exact name match</label>
+    </div>
+                    <div class="checkbox-item">
+        <input type="checkbox" id="socure_error">
+        <label for="socure_error">socure error not applicable to IUs</label>
     </div>
 </div>
             </div>
@@ -1085,6 +1085,9 @@ if (document.getElementById('SSN').checked) {
                 if (document.getElementById('adverse_media').checked) {
                     outputLines.push('adverse media is false positive, no DOB/exact name match');
                 }
+                                if (document.getElementById('socure_error').checked) {
+                    outputLines.push('socure error not applicable to IUs');
+                }
             }
 
             // Denial - Always check denial checkboxes regardless of which tab is active
@@ -1102,9 +1105,6 @@ if (document.getElementById('document_forgery').checked) {
 }
 if (document.getElementById('multiple_documents').checked) {
     outputLines.push('multiple failed requests for documents');
-}
-if (document.getElementById('socure_error').checked) {
-    outputLines.push('socure error, user must reapply');
 }
 if (document.getElementById('pep_positive_match').checked) {
     outputLines.push('domestic/international PEP is a positive match. BSA will be notified for risk rating purposes');
