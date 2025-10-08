@@ -455,7 +455,8 @@ input[type="checkbox"]:checked {
         <strong>Check:</strong><br>
         - Name and address match<br>
         - Document Date (must be within 6 months)<br>
-        - Leases are signed/contain signatures
+        - If document is lease, must contain signatures
+        - If document is US driver’s license, must not be expired
     </div>
     <div class="checkbox-item">
         <input type="checkbox" id="address_verified">
@@ -516,7 +517,6 @@ input[type="checkbox"]:checked {
     <div class="note">
         <strong>Check:</strong><br>
         - Name and SSN match<br>
-        - Document must be one of the accepted types
     </div>
     <div class="checkbox-item">
         <input type="checkbox" id="ssn_verified">
@@ -583,7 +583,7 @@ input[type="checkbox"]:checked {
 <div class="tab-content hidden" id="pii-section">
     <div class="note">
         <strong>Check:</strong><br>
-        - Search by customer name/email<br>
+        - Search applications by customer name/email<br>
         - Related applicants ID/DOB match<br>
         - Status of application (approved, denied, etc.)
     </div>
