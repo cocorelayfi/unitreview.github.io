@@ -418,7 +418,7 @@ input[type="checkbox"]:checked {
         <strong>Check:</strong><br>
         - Name and DOB match, passport # match<br>
         - ID expiry date<br>
-        - Age and location (cannot be under 18 or from a prohibited country)<br>
+        - Age and nationality (cannot be under 18 or from a prohibited country)<br>
         - Quality of ID (cannot be voided or forged)<br>
         - First/last name <strong>cannot</strong> be shortened, must be exact match
     </div>
@@ -486,7 +486,8 @@ input[type="checkbox"]:checked {
 <div class="tab-content hidden" id="ein-section">
     <div class="note">
         <strong>Check:</strong><br>
-        - EIN, business name, and customer name match
+        - EIN and business name match<br>
+        - If a tax return is submitted, filing must be within 2 years
     </div>
    <div class="checkbox-item">
     <input type="checkbox" id="ein_verified">
@@ -517,6 +518,7 @@ input[type="checkbox"]:checked {
     <div class="note">
         <strong>Check:</strong><br>
         - Name and SSN match<br>
+        - If either a tax return or W-2 is submitted, filing must be within 2 years
     </div>
     <div class="checkbox-item">
         <input type="checkbox" id="ssn_verified">
@@ -542,7 +544,6 @@ input[type="checkbox"]:checked {
 <div class="tab-content hidden" id="coi-section">
     <div class="note">
         <strong>Check:</strong><br>
-        - Valid COI <a href="https://docs.google.com/document/d/1b5ktwFlRRJx7DLqqk7BnBiW0P5w-ovHJb7cxL7mX2vI/edit?tab=t.97f76w8a2euc" target="_blank" style="color: var(--button-bg); text-decoration: underline;">documentation type</a><br>
         - Business name/registered state match
     </div>
         <div class="note">
