@@ -347,7 +347,7 @@ input[type="checkbox"]:checked {
     <div class="section">
     <div class="section-title part-0-toggle">Part 0: Address Search</div>
     <div class="flag-item">
-        <button id="addressVerifyBtn" class="verify-button">Verify Business & Personal Address</button>
+        <button id="addressVerifyBtn" class="verify-button">Verify Business, Operating, & Personal Address</button>
     </div>
 </div>
 
@@ -416,11 +416,12 @@ input[type="checkbox"]:checked {
 <div class="tab-content hidden" id="selfie-section">
     <div class="note">
         <strong>Check:</strong><br>
-        - Name and DOB match, passport # match<br>
+        - Name and DOB match<br>
+        - Passport # match (if applicable)<br>
         - ID expiry date<br>
         - Age and nationality (cannot be under 18 or from a prohibited country)<br>
-        - Quality of ID (cannot be voided or forged)<br>
-        - First/last name <strong>cannot</strong> be shortened, must be exact match
+        - Quality of ID and selfie <br>
+        - First/last name cannot be shortened, must be exact match
     </div>
     <div class="checkbox-item">
         <input type="checkbox" id="selfie_matches">
@@ -453,10 +454,10 @@ input[type="checkbox"]:checked {
 <div class="tab-content hidden" id="address-section">
     <div class="note">
         <strong>Check:</strong><br>
-        - Name and address match<br>
-        - Document Date (must be within 6 months)<br>
-        - If document is lease, must contain signatures<br>
-        - If document is US driver’s license, must not be expired
+        - Name, address match, and date (must be within 6 months)<br>
+        - Must be either under the business or BO name<br>
+        - Document name and address must be recognizable in english<br>
+        - If document is a lease, must contain signatures
     </div>
     <div class="checkbox-item">
         <input type="checkbox" id="address_verified">
@@ -470,6 +471,10 @@ input[type="checkbox"]:checked {
             <option value="US driver's license">US driver's license</option>
         </select>
         <span>verifies address</span>
+        <div class="checkbox-item">
+            <input type="checkbox" id="address_operating">
+            <label for="address_operating">operational address is the same as business/personal address</label>
+        </div>
     </div>
     <div class="auto-approved-header">
         <strong>Auto-approved:</strong>
@@ -584,8 +589,8 @@ input[type="checkbox"]:checked {
 <div class="tab-content hidden" id="pii-section">
     <div class="note">
         <strong>Check:</strong><br>
-        - Search applications by customer name/email<br>
-        - Related applicants ID/DOB match<br>
+        - Search applications by customer name and email<br>
+        - If related applicants match in ID/DOB<br>
         - Status of application (approved, denied, etc.)
     </div>
     <div class="checkbox-item">
@@ -607,6 +612,11 @@ input[type="checkbox"]:checked {
 
                 <!-- OFAC Section -->
                 <div class="tab-content hidden" id="ofac-section">
+                    <div class="note">
+        <strong>Check:</strong><br>
+        - Identify type of clearance code<br>
+        - If triggered sanction(s) matches applicant
+    </div>
                     <!-- NMM -->
                     <div class="note">NMM: BO-BO (applicant) or biz-biz (customer)</div>
                     <div class="checkbox-item">
@@ -938,12 +948,12 @@ document.querySelectorAll('.auto-approved-header').forEach(header => {
                 parts1and2.classList.remove('hidden');
                 parts1and2.classList.add('visible');
                 part0Toggle.classList.add('collapsed');
-                this.textContent = "✓ Verified Business & Personal Address";
+                this.textContent = "✓ Verified Business, Operating, & Personal Address";
             } else {
                 parts1and2.classList.add('hidden');
                 parts1and2.classList.remove('visible');
                 part0Toggle.classList.remove('collapsed');
-                this.textContent = "Verify Business & Personal Address";
+                this.textContent = "Verify Business, Operating, & Personal Address";
             }
         });
 
@@ -1023,6 +1033,9 @@ if (document.getElementById('SSN').checked) {
                 if (document.getElementById('address_verified').checked) {
                     const docType = document.getElementById('address_document_type').value;
                     outputLines.push(`${docType} verifies address`);
+                }
+                if (document.getElementById('address_operating').checked) {
+                    outputLines.push('operational address is the same as business/personal address');
                 }
                 if (document.getElementById('address_miskeyed').checked) {
                     outputLines.push('address miskeyed. Updated and reran and auto-approved');
@@ -1156,7 +1169,7 @@ if (document.getElementById('pep_positive_match').checked) {
 
             // Reset the address verification button
             addressVerifyBtn.classList.remove('verified');
-            addressVerifyBtn.textContent = "Verify Business & Personal Address";
+            addressVerifyBtn.textContent = "Verify Business, Operating, & Personal Address";
 
             // Reset auto-approved sections
 document.querySelectorAll('.auto-approved-header').forEach(header => {
