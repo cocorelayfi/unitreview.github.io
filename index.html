@@ -473,7 +473,7 @@ input[type="checkbox"]:checked {
         <span>verifies address</span>
         <div class="checkbox-item">
             <input type="checkbox" id="address_operating">
-            <label for="address_operating">operational address is the same as business/personal address</label>
+            <label for="address_operating">operating address is the same as business/personal address</label>
         </div>
     </div>
     <div class="auto-approved-header">
@@ -1035,7 +1035,7 @@ if (document.getElementById('SSN').checked) {
                     outputLines.push(`${docType} verifies address`);
                 }
                 if (document.getElementById('address_operating').checked) {
-                    outputLines.push('operational address is the same as business/personal address');
+                    outputLines.push('operating address is the same as business/personal address');
                 }
                 if (document.getElementById('address_miskeyed').checked) {
                     outputLines.push('address miskeyed. Updated and reran and auto-approved');
